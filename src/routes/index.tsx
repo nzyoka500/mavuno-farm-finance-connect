@@ -631,7 +631,7 @@ function TabLender() {
       <Card className="lg:col-span-2">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base">Applicant: Jean Claude</CardTitle>
+            <CardTitle className="text-base">Applicant: Jean Kabuku</CardTitle>
             <Badge className="bg-accent text-primary border-0">Loan request · $500</Badge>
           </div>
         </CardHeader>

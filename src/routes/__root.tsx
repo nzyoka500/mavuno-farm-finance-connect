@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Mavuno helps farmers build trusted farm records, understand their credit readiness, and access finance more easily." },
       { name: "author", content: "Mavuno" },
       { property: "og:title", content: "Mavuno — AI-Powered Credit Readiness for Smallholder Farmers" },
-      { property: "og:description", content: "Turning farm records into financial opportunity for smallholder farmers, SACCOs, and lenders." },
+      { property: "og:description", content: "Mavuno helps farmers build trusted farm records, understand their credit readiness, and access finance more easily." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Mavuno" },
+      { name: "twitter:title", content: "Mavuno — AI-Powered Credit Readiness for Smallholder Farmers" },
+      { name: "twitter:description", content: "Mavuno helps farmers build trusted farm records, understand their credit readiness, and access finance more easily." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e7c59951-5dd1-4123-b6f7-ad160501a8e5/id-preview-50e60ead--212947ce-fd21-493c-bfbf-4d5736e98e1e.lovable.app-1782356463992.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e7c59951-5dd1-4123-b6f7-ad160501a8e5/id-preview-50e60ead--212947ce-fd21-493c-bfbf-4d5736e98e1e.lovable.app-1782356463992.png" },
     ],
     links: [
       {

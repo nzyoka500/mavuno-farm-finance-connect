@@ -44,15 +44,15 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { KnowledgeGraph } from "@/components/mavuno/KnowledgeGraph";
-import logoAsset from "@/assets/mavuno-logo.png.asset.json";
+import logoAsset from "@/assets/mavuno-logo.png";
 import heroFarmer from "@/assets/farmer-hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Mavuno — AI-Powered Credit Readiness for Smallholder Farmers" },
+      { title: "Mavuno - AI-Powered Credit Readiness for Smallholder Farmers" },
       { name: "description", content: "Mavuno helps farmers build trusted farm records, understand their credit readiness, and access finance more easily." },
-      { property: "og:title", content: "Mavuno — AI Credit Readiness & Farm Risk Profiling" },
+      { property: "og:title", content: "Mavuno - AI Credit Readiness & Farm Risk Profiling" },
       { property: "og:description", content: "Turning farm records into financial opportunity for smallholder farmers and lenders." },
     ],
   }),
@@ -79,8 +79,8 @@ function Nav() {
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b">
       <div className="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 py-3">
         <a href="#top" className="flex items-center gap-2">
-          <img src={logoAsset.url} alt="Mavuno" className="h-9 w-9 object-contain" />
-          <span className="font-bold text-lg tracking-tight">mavuno</span>
+          <img src={logoAsset} alt="Mavuno logo" className="h-9 w-9 object-contain" />
+          <span className="font-bold text-lg tracking-tight text-primary">mavuno</span>
         </a>
         <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
           <a href="#problem" className="hover:text-foreground">Problem</a>
@@ -325,11 +325,11 @@ function TabFarmProfile() {
         <CardContent className="-mt-12 relative">
           <div className="flex flex-col sm:flex-row sm:items-end gap-5">
             <div className="h-24 w-24 rounded-2xl bg-card border-4 border-card shadow-[var(--shadow-soft)] grid place-items-center text-3xl font-bold text-primary">
-              JC
+              JK
             </div>
             <div className="flex-1 sm:pb-2">
-              <TabHeader title="Jean Claude" subtitle="Smallholder farmer · Verified profile" />
-              <div className="flex flex-wrap gap-4 text-sm -mt-4">
+              <TabHeader title="Jean Kabuku" subtitle="Smallholder farmer · Verified profile" />
+              <div className="flex flex-wrap gap-4 text-sm -mt-6">
                 <span className="flex items-center gap-1.5 text-muted-foreground"><MapPin className="h-4 w-4" />Musanze, Rwanda</span>
                 <span className="flex items-center gap-1.5 text-muted-foreground"><Layers className="h-4 w-4" />2.4 Acres</span>
                 <span className="flex items-center gap-1.5 text-muted-foreground"><Sprout className="h-4 w-4" />Maize · Beans</span>
@@ -794,20 +794,20 @@ function Footer() {
   return (
     <footer className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-hero)" }} />
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 text-primary-foreground">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 text-black-foreground">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-4">
-              <img src={logoAsset.url} alt="Mavuno" className="h-12 w-12 object-contain bg-white/95 rounded-xl p-1" />
-              <span className="text-2xl font-bold">mavuno</span>
+              <img src={logoAsset} alt="Mavuno logo" className="h-12 w-12 object-contain bg-white/95 rounded-xl p-1" />
+              <span className="text-2xl font-bold text-primary">mavuno</span>
             </div>
             <h3 className="text-3xl sm:text-4xl font-bold tracking-tight">Turning farm records into financial opportunity.</h3>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
+            <Button asChild size="lg" className="bg-secondary text-white hover:bg-black/90">
               <a href="#prototype">Explore Demo</a>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/40 bg-transparent text-primary-foreground hover:bg-white/10">
+            <Button asChild size="lg" variant="outline" className="border-white/40 bg-primary text-primary-foreground hover:bg-white/10">
               <a href="mailto:team@mavuno.app">Contact Team</a>
             </Button>
           </div>

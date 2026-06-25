@@ -106,18 +106,21 @@ function Hero() {
           <Badge variant="secondary" className="bg-accent text-accent-foreground border-0 mb-5">
             <Leaf className="h-3.5 w-3.5 mr-1.5" /> Mercy Corps AgriFin · Phase 2 Prototype
           </Badge>
+
+          {/* Grow Trust. Unlock Finance. */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05]">
-            AI-Powered <span className="text-primary">Credit Readiness</span> for Smallholder Farmers
+            Grow Trust. <br></br>
+            <span className="text-primary">Unlock Finance.</span>
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl">
-            Mavuno helps farmers build trusted farm records, understand their credit readiness, and access finance more easily — while giving lenders the visibility they need to say yes.
+            Mavuno helps farmers build trusted farm records, understand their credit readiness, and access finance with confidence
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 shadow-[var(--shadow-soft)]">
               <a href="#prototype">Explore Demo <ArrowRight className="ml-2 h-4 w-4" /></a>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary/30 text-primary hover:bg-primary/5">
-              <a href="#solution">View Farmer Journey</a>
+              <a href="#solution">Farmer Journey</a>
             </Button>
           </div>
           <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">

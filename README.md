@@ -60,7 +60,8 @@ Lenders can:
 
 ## Farmer Dashboard
 
-![Homepage](./images/famer.png)
+![Famer Dashboard](./images/farmer.png)
+![Famer Dashboard](./images/farmer-2.png)
 
 
 ## Lender Dashboard

@@ -52,12 +52,10 @@ function AuthPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5 flex flex-col">
       <header className="px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-          <Sprout className="text-primary" /> Mavuno
+        <Link to="/" className="flex items-center gap-2 font-bold text-lg text-primary">
+          <ArrowLeft className="h-4 w-4" /> Back Home
         </Link>
-        <Link to="/" className="text-sm text-muted-foreground inline-flex items-center gap-1">
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Link>
+
       </header>
       <div className="flex-1 flex items-center justify-center px-4 py-8">
         <Card className="w-full max-w-md shadow-xl">

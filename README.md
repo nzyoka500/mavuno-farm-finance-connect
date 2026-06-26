@@ -56,30 +56,16 @@ Lenders can:
 
 ## Homepage
 
-> *(Add homepage screenshot here)*
-
-```text
-/images/homepage.png
-```
-
+![Homepage](./images/hero.png)
 
 ## Farmer Dashboard
 
-> *(Add farmer dashboard screenshot here)*
-
-```text
-/images/farmer-dashboard.png
-```
+![Homepage](./images/famer.png)
 
 
 ## Lender Dashboard
 
-> *(Add lender dashboard screenshot here)*
-
-```text
-/images/lender-dashboard.png
-```
-
+![Homepage](./images/lender.png)
 
 ## Features
 

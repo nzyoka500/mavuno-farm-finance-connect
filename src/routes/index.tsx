@@ -89,9 +89,14 @@ function Nav() {
           <a href="#impact" className="hover:text-foreground">Impact</a>
           <a href="#vision" className="hover:text-foreground">Roadmap</a>
         </nav>
-        <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
-          <a href="#prototype">Explore Demo</a>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild size="sm" variant="outline">
+            <a href="/auth">Sign in</a>
+          </Button>
+          <Button asChild size="sm" className="bg-primary hover:bg-primary/90">
+            <a href="/auth">Get Started</a>
+          </Button>
+        </div>
       </div>
     </header>
   );

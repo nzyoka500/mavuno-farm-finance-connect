@@ -1,12 +1,14 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
-import { Sprout, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuth, type Role } from "@/lib/mock-store";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { Role } from "@/lib/api";
+import { ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/auth-store";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "Sign in — Mavuno" }] }),
@@ -15,38 +17,71 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const { currentUser, login, register } = useAuth();
+  const { currentUser, loading, login, register } = useAuth();
+
   const [mode, setMode] = useState<"login" | "register">("login");
   const [role, setRole] = useState<Role>("farmer");
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", password: "", phone: "", region: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phone: "",
+    region: "",
+  });
 
+  // Redirect if already authenticated
   useEffect(() => {
     if (currentUser) {
       navigate({ to: currentUser.role === "farmer" ? "/farmer" : "/lender" });
     }
   }, [currentUser, navigate]);
 
-  const submit = (e: React.FormEvent) => {
+  const field = (key: keyof typeof form) => ({
+    value: form[key],
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+      setForm((f) => ({ ...f, [key]: e.target.value })),
+  });
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    if (mode === "login") {
-      const r = login(form.email, form.password);
-      if (!r.ok) return setError(r.error);
-      navigate({ to: r.user.role === "farmer" ? "/farmer" : "/lender" });
-    } else {
-      if (!form.name || !form.email || form.password.length < 6) {
-        return setError("Name, email and a 6+ char password are required.");
+
+    try {
+      if (mode === "login") {
+        const user = await login(form.email, form.password);
+        navigate({ to: user.role === "farmer" ? "/farmer" : "/lender" });
+      } else {
+        if (!form.name || !form.email || form.password.length < 6) {
+          return setError("Name, email and a 6+ char password are required.");
+        }
+        const user = await register({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          phone: form.phone || undefined,
+          region: form.region || undefined,
+          role,
+        });
+        navigate({ to: user.role === "farmer" ? "/farmer" : "/lender" });
       }
-      const r = register({ ...form, role });
-      if (!r.ok) return setError(r.error);
-      navigate({ to: role === "farmer" ? "/farmer" : "/lender" });
+    } catch (err) {
+      if (err instanceof ApiError) {
+        // 409 → duplicate email; 401 → wrong credentials
+        setError(err.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
     }
   };
 
   const fillDemo = (r: Role) => {
     setMode("login");
-    setForm({ ...form, email: r === "farmer" ? "farmer@mavuno.demo" : "lender@mavuno.demo", password: "demo1234" });
+    setForm((f) => ({
+      ...f,
+      email: r === "farmer" ? "farmer@mavuno.demo" : "lender@mavuno.demo",
+      password: "demo1234",
+    }));
   };
 
   return (
@@ -55,16 +90,25 @@ function AuthPage() {
         <Link to="/" className="flex items-center gap-2 font-bold text-lg text-primary">
           <ArrowLeft className="h-4 w-4" /> Back Home
         </Link>
-
       </header>
+
       <div className="flex-1 flex items-center justify-center px-4 py-8">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl">Welcome to Mavuno</CardTitle>
-            <p className="text-sm text-muted-foreground">Build your farm profile and unlock credit.</p>
+            <p className="text-sm text-muted-foreground">
+              Build your farm profile and unlock credit.
+            </p>
           </CardHeader>
+
           <CardContent>
-            <Tabs value={mode} onValueChange={(v) => setMode(v as "login" | "register")}>
+            <Tabs
+              value={mode}
+              onValueChange={(v) => {
+                setMode(v as typeof mode);
+                setError("");
+              }}
+            >
               <TabsList className="grid grid-cols-2 w-full">
                 <TabsTrigger value="login">Sign in</TabsTrigger>
                 <TabsTrigger value="register">Register</TabsTrigger>
@@ -73,6 +117,7 @@ function AuthPage() {
               <form onSubmit={submit} className="space-y-4 mt-4">
                 {mode === "register" && (
                   <>
+                    {/* Role selector */}
                     <div className="grid grid-cols-2 gap-2">
                       <Button
                         type="button"
@@ -89,36 +134,52 @@ function AuthPage() {
                         I'm a Lender
                       </Button>
                     </div>
+
                     <div>
                       <Label>Full name</Label>
-                      <Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+                      <Input {...field("name")} />
                     </div>
+
                     <div className="grid grid-cols-2 gap-2">
                       <div>
                         <Label>Phone</Label>
-                        <Input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
+                        <Input {...field("phone")} />
                       </div>
                       <div>
                         <Label>Region</Label>
-                        <Input value={form.region} onChange={(e) => setForm({ ...form, region: e.target.value })} />
+                        <Input {...field("region")} />
                       </div>
                     </div>
                   </>
                 )}
+
                 <div>
                   <Label>Email</Label>
-                  <Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+                  <Input type="email" {...field("email")} />
                 </div>
+
                 <div>
                   <Label>Password</Label>
-                  <Input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                  <Input type="password" {...field("password")} />
                 </div>
+
                 {error && <p className="text-sm text-destructive">{error}</p>}
-                <Button type="submit" className="w-full">
-                  {mode === "login" ? "Sign in" : "Create account"}
+
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      {mode === "login" ? "Signing in…" : "Creating account…"}
+                    </span>
+                  ) : mode === "login" ? (
+                    "Sign in"
+                  ) : (
+                    "Create account"
+                  )}
                 </Button>
               </form>
 
+              {/* Demo shortcuts */}
               <div className="mt-6 pt-4 border-t">
                 <p className="text-xs text-muted-foreground mb-2">Quick demo access:</p>
                 <div className="grid grid-cols-2 gap-2">
